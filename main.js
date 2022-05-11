@@ -1,14 +1,19 @@
 const MongoClient = require("mongodb").MongoClient;
-const User = require("./user");
+
+require('module-alias/register')
+
+const User = require('@util/user');
+
+require('dotenv').config()
+const mongoPath = process.env.MONGOPATH
 
 MongoClient.connect(
-	// TODO: Connection 
-	"my-mongodb+srv-connection-string",
+	mongoPath,
 	{ useNewUrlParser: true },
 ).catch(err => {
 	console.error(err.stack)
 	process.exit(1)
 }).then(async client => {
-	console.log('Connected to MongoDB');
+	console.log('Connected to MongoDB successfully');
 	User.injectDB(client);
 })
